@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASSIGNMENT1</title>
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: beige;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.card {
+    background-color: #fff;
+    border: 3px solid black;
+    border-radius: 150px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s ease;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card span.hidden {
+    display: none;
+}
+
+.card span {
+    font-size: 24px;
+}
+</style>
+<body>
+    <div class="card-container" id="card-container">
+    </div>
+
+    <SCRIPT>
+        let flippedCards = [];
+let clickDisabled = false;
+
+
+function initializeCards() {
+    const container = document.getElementById('card-container');
+    for (let i = 1; i <= 12; i++) {
+        const card = createCard(`HELLOO!!`);
+        container.appendChild(card);
+    }
+}
+
+function createCard(details) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.innerHTML = `<span class="hidden">${details}</span>`;
+    card.addEventListener('click', () => flipCard(card));
+    return card;
+}
+
+function flipCard(card) {
+    if (clickDisabled || flippedCards.includes(card)) return;
+
+    card.firstChild.classList.remove('hidden');
+    flippedCards.push(card);
+
+    if (flippedCards.length === 1) {
+        clickDisabled = true;
+        setTimeout(() => {
+            const [card1] = flippedCards;
+            card1.firstChild.classList.add('hidden');
+            flippedCards = [];
+            clickDisabled = false;
+        }, 1000);
+    }
+}
+
+// Initialize the cards on page load
+document.addEventListener('DOMContentLoaded', initializeCards);
+
+    </SCRIPT>
+</body>
+
+</html>
